@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       },
       pages: {
         src: ['<%%= config.src %>/<%%= config.templates %>/*.hbs'],
-        dest: '<%%= config.dist %>'
+        dest: '<%%= config.dist %>/'
       }
     },
 
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     browserSync: {
       bsFiles: {
         src: [
-          '<%%= config.dist %>/*'
+          '<%%= config.dist %>/*.txt'
         ]
       },
 
