@@ -29,11 +29,58 @@ module.exports = yeoman.generators.Base.extend({
         validate: function (input) {
           return !!input;
         }
+      }, {
+        type: 'confirm',
+        name: 'isMailgun',
+        message: 'Use Mailgun to send test emails? (require mailgun.com account)',
+        default: true
+      }, {
+        when: function (response) {
+          return response.isMailgun === true;
+        },
+        name: 'mailgunKey',
+        message: 'Enter Mailgun Api Key',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isMailgun === true;
+        },
+        name: 'mailgunSubject',
+        message: 'Enter Mailgun email subject',
+        default: 'This is a test email',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isMailgun === true;
+        },
+        name: 'mailgunSenderEmail',
+        message: 'Enter Mailgun sender email',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isMailgun === true;
+        },
+        name: 'mailgunRecipientEmail',
+        message: 'Enter Mailgun recipient email',
+        validate: function (input) {
+          return !!input;
+        }
       }];
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.projectAuthor = props.projectAuthor;
+      this.isMailgun = props.isMailgun;
+      this.mailgunKey = props.mailgunKey;
+      this.mailgunSubject = props.mailgunSubject;
+      this.mailgunSenderEmail = props.mailgunSenderEmail;
+      this.mailgunRecipientEmail = props.mailgunRecipientEmail;
 
       done();
     }.bind(this));

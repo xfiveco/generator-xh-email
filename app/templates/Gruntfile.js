@@ -66,6 +66,19 @@ module.exports = function (grunt) {
       }
     },
 
+    // Use Mailgun option if you want to email the design to your inbox or to something like Litmus
+    mailgun: {
+      mailer: {
+        options: {
+          key: '<%= mailgunKey %>',
+          sender: '<%= mailgunSenderEmail %>',
+          recipient: '<%= mailgunRecipientEmail %>',
+          subject: '<%= mailgunSubject %>'
+        },
+        src: ['<%%= config.dist %>/' + grunt.option('template')]
+      }
+    },
+
     // Watches for changes and reloads a connected browsers
     browserSync: {
       bsFiles: {
@@ -117,7 +130,8 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['browserSync', 'watch']);
 
   // Use grunt send if you want to actually send the email to your inbox
-  // grunt.registerTask('send', ['mailgun']);
+  // grunt send --template=index.html
+  grunt.registerTask('send', ['mailgun']);
 
   // Upload images to our CDN on Rackspace Cloud Files
   // grunt.registerTask('cdnify', ['default','cloudfiles','cdn']);
