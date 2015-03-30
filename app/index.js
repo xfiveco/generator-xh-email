@@ -12,19 +12,29 @@ module.exports = yeoman.generators.Base.extend({
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the laudable ' + chalk.red('EmailBoilerplate') + ' generator!'
-    ));
+    this.log('');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' Email Boilerplate ') + '\n');
+    this.log(chalk.white('  A Yeoman generator for creating email templates') + '\n');
+    this.log(chalk.cyan(' ***********************************************************') + '\n');
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+        name: 'projectName',
+        message: 'Please enter project\'s name',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        name: 'projectAuthor',
+        message: 'Please enter project\'s author',
+        validate: function (input) {
+          return !!input;
+        }
+      }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      this.projectName = props.projectName;
+      this.projectAuthor = props.projectAuthor;
 
       done();
     }.bind(this));
@@ -32,25 +42,23 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
-      );
+      this.template('_package.json', 'package.json');
+      this.template('_index.html', 'index.html');
     },
 
     projectfiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
-      this.fs.copy(
-        this.templatePath('Gruntfile.js'),
-        this.destinationPath('Gruntfile.js')
-      );
+      this.copy('editorconfig', '.editorconfig');
+      this.copy('gitignore', '.gitignore');
+      this.template('Gruntfile.js');
+    },
+
+    templateFiles: function () {
+      this.template('src/layouts/_default.hbs', 'src/layouts/default.hbs');
+      this.template('src/templates/_index.hbs', 'src/templates/index.hbs');
+    },
+
+    styleFiles: function () {
+      this.template('src/scss/_main.scss', 'src/scss/main.scss');
     }
   },
 

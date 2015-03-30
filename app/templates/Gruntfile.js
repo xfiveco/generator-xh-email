@@ -2,7 +2,6 @@ module.exports = function (grunt) {
   'use strict';
 
   require('time-grunt')(grunt);
-  require('load-grunt-tasks')(grunt);
 
   // Project configuration.
   grunt.initConfig({
@@ -24,7 +23,7 @@ module.exports = function (grunt) {
           outputStyle: 'expanded'
         },
         files: {
-          '<%= config.tmp %>/css/main.css': '<%= config.src %>/scss/main.scss'
+          '<%%= config.tmp %>/css/main.css': '<%%= config.src %>/scss/main.scss'
         }
       }
     },
@@ -32,12 +31,12 @@ module.exports = function (grunt) {
     // Assembles your email content with html layout
     assemble: {
       options: {
-        layoutdir: '<%= config.src %>/<%= config.layouts %>',
+        layoutdir: '<%%= config.src %>/<%%= config.layouts %>',
         flatten: true
       },
       pages: {
-        src: ['<%= config.src %>/<%= config.templates %>/*.hbs'],
-        dest: '<%= config.dist %>'
+        src: ['<%%= config.src %>/<%%= config.templates %>/*.hbs'],
+        dest: '<%%= config.dist %>'
       }
     },
 
@@ -49,7 +48,7 @@ module.exports = function (grunt) {
         },
         files: [{
             expand: true,
-            src: ['<%= config.dist %>/*.html'],
+            src: ['<%%= config.dist %>/*.html'],
             dest: ''
         }]
       },
@@ -60,7 +59,7 @@ module.exports = function (grunt) {
         },
         files: [{
             expand: true,
-            src: ['<%= config.dist %>/*.html'],
+            src: ['<%%= config.dist %>/*.html'],
             dest: '',
             ext: '.txt'
         }]
@@ -71,7 +70,7 @@ module.exports = function (grunt) {
     browserSync: {
       bsFiles: {
         src: [
-          '<%= config.dist %>/*'
+          '<%%= config.dist %>/*'
         ]
       },
 
@@ -94,11 +93,22 @@ module.exports = function (grunt) {
       },
 
       compileCSS: {
-        files: ['<%= config.src %>/**/*'],
+        files: ['<%%= config.src %>/**/*'],
         tasks: ['build']
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-browser-sync');
+  grunt.loadNpmTasks('grunt-mailgun');
+  grunt.loadNpmTasks('grunt-premailer');
+  grunt.loadNpmTasks('grunt-cloudfiles');
+  grunt.loadNpmTasks('grunt-cdn');
+  grunt.loadNpmTasks('grunt-litmus');
+  grunt.loadNpmTasks('grunt-notify');
+  grunt.loadNpmTasks('assemble');
 
   // Main build task where actually all of the magic happen
   grunt.registerTask('build', ['sass', 'assemble', 'premailer']);

@@ -19,8 +19,7 @@ describe('email-boilerplate:app', function () {
   it('creates files', function () {
     assert.file([
       'package.json',
-      '.editorconfig',
-      '.jshintrc'
+      '.editorconfig'
     ]);
   });
 });
