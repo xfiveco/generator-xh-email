@@ -1,7 +1,6 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
@@ -43,13 +42,17 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     app: function () {
       this.template('_package.json', 'package.json');
-      this.template('_index.html', 'index.html');
     },
 
-    projectfiles: function () {
+    projectFiles: function () {
       this.copy('editorconfig', '.editorconfig');
       this.copy('gitignore', '.gitignore');
+      this.copy('Gemfile');
       this.template('Gruntfile.js');
+    },
+
+    projectIndex: function () {
+      this.template('_index.html', 'index.html');
     },
 
     templateFiles: function () {

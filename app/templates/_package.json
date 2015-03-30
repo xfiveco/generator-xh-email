@@ -18,6 +18,7 @@
     "grunt-cloudfiles": "^0.3.0",
     "grunt-cdn": "^0.6.5",
     "grunt-litmus": "^0.1.8",
-    "time-grunt": "^1.1.0"
+    "time-grunt": "^1.1.0",
+    "assemble": "0.4.42"
   }
 }
