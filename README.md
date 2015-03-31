@@ -1,6 +1,9 @@
-# Email Boilerplate Generator
+Email Boilerplate Generator [![Build Status](https://travis-ci.org/piotrkulpinski/generator-email-boilerplate.svg?branch=master)](https://travis-ci.org/piotrkulpinski/generator-email-boilerplate) [![NPM version](https://badge.fury.io/js/generator-email-boilerplate.svg)](http://badge.fury.io/js/generator-email-boilerplate)
+============
 
 > [Yeoman](http://yeoman.io) generator for creating email templates
+
+[![NPM](https://nodei.co/npm/generator-email-boilerplate.png?downloads=true)](https://nodei.co/npm/generator-email-boilerplate/)
 
 ## Getting Started
 
