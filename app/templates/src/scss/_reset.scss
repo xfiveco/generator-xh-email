@@ -1,0 +1,84 @@
+
+// Reset
+//------------------------------------------------------------------------------
+
+html, body, table, tr, th, td, thead, tfoot,
+h1, h2, h3, h4, h5, h6, blockquote,
+p, ul, ol, dl, dt, dd, img, figure {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html {
+  box-sizing: border-box;
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+}
+
+img {
+  -ms-interpolation-mode: bicubic;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  line-height: 100%;
+  outline: none;
+  border: 0 none;
+  text-decoration: none;
+}
+
+a img {
+  border: 0 none;
+}
+
+body {
+  height: 100% !important;
+  width: 100% !important;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Let's make sure all tables have defaults
+table {
+  -premailer-width: 100%; // This is a specific style for the premailer gem
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+
+  td {
+    vertical-align: top;
+     mso-table-lspace: 0pt;
+     mso-table-rspace: 0pt;
+  }
+
+  &.body {
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// Preheader text is displayed in certain clients as a preview
+// but not shown when the user opens the email
+.preheader {
+  color: transparent;
+  display: none;
+  height: 0;
+  width: 0;
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  mso-hide: all;
+  visibility: hidden;
+}

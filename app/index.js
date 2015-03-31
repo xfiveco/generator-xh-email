@@ -196,6 +196,7 @@ module.exports = yeoman.generators.Base.extend({
 
     styleFiles: function () {
       this.template('src/scss/_main.scss', 'src/scss/main.scss');
+      this.template('src/scss/_reset.scss', 'src/scss/_reset.scss');
     },
 
     structureFiles: function () {
