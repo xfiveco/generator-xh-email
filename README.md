@@ -1,33 +1,45 @@
-# generator-email-boilerplate [![Build Status](https://secure.travis-ci.org/piotrkulpinski/generator-email-boilerplate.png?branch=master)](https://travis-ci.org/piotrkulpinski/generator-email-boilerplate)
+# Email Boilerplate Generator
 
 > [Yeoman](http://yeoman.io) generator
 
-
 ## Getting Started
 
-### What is Yeoman?
+The following software needs to be installed if you want to use Email Boilerplate Generator. These installations need to be done just once so you can skip this section if you have the software already installed.
 
-Trick question. It's not a thing. It's this guy:
+#### Node.js
+Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
 
-![](http://i.imgur.com/JHaAlBJ.png)
+#### Premailer Gem
+Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
+```bash
+gem install premailer
+```
 
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+#### Grunt with Grunt CLI
+Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globally:
+
+```bash
+npm install -g grunt-cli
+```
+
+### Yeoman
+Email Boilerplate Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:
 
 ```bash
 npm install -g yo
 ```
 
-### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
+### Email Boilerplate Generator
 To install generator-email-boilerplate from npm, run:
 
 ```bash
 npm install -g generator-email-boilerplate
 ```
+
+Congratulations, you are now ready to use Email Boilerplate Generator!
+
+## Usage
 
 Finally, initiate the generator:
 
@@ -35,13 +47,39 @@ Finally, initiate the generator:
 yo email-boilerplate
 ```
 
-### Getting To Know Yeoman
+## Sensitive Information
+During project generation process a file `secrets.json` will be created. In that file we store all of secret credentials needed for additional services used in Email Boilerplate Generator.
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+By default this file will be ignored from git repository. We encourage you __not__ to store sensitive data in your git repo. If you must, please look into [git-encrypt](https://github.com/shadowhand/git-encrypt) or some other method of encrypting your configuration secrets.
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+The secret file will look like this:
 
+```json
+{
+  "mailgun": {
+    "api_key": "YOUR MG PRIVATE API KEY",
+    "sender": "E.G. POSTMASTER@YOURDOMAIN.COM",
+    "recipient": "WHO YOU WANT TO SEND THE EMAIL TO",
+    "subject": "DEFAULT SUBJECT OF YOUR EMAILS"
+  },
+  "litmus": {
+    "username": "LITMUS USERNAME",
+    "password": "LITMUS PASS",
+    "company": "LITMUS COMPANY/API SUBDOMAIN NAME"
+  },
+  "aws": {
+    "accessKey": "AWS ACCESS KEY ID",
+    "secretKey": "AWS SECRET KEY",
+    "region": "S3 BUCKET REGION",
+    "bucket": "S3 BUCKET NAME"
+  }
+}
+```
+
+## Credits
+
+Email Boilerplate Generator is inspired by [XH Generator](https://github.com/xhtmlized/generator-xh) and [Grunt Email Design Workflow](https://github.com/leemunroe/grunt-email-workflow).
 
 ## License
 
-MIT
+Email Boilerplate Generator is licensed under [MIT License](LICENSE).

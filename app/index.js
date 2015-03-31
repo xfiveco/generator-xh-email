@@ -57,7 +57,7 @@ module.exports = yeoman.generators.Base.extend({
         when: function (response) {
           return response.isMailgun === true;
         },
-        name: 'mailgunSenderEmail',
+        name: 'mailgunSender',
         message: 'Enter Mailgun sender email',
         validate: function (input) {
           return !!input;
@@ -66,7 +66,7 @@ module.exports = yeoman.generators.Base.extend({
         when: function (response) {
           return response.isMailgun === true;
         },
-        name: 'mailgunRecipientEmail',
+        name: 'mailgunRecipient',
         message: 'Enter Mailgun recipient email',
         validate: function (input) {
           return !!input;
@@ -154,8 +154,8 @@ module.exports = yeoman.generators.Base.extend({
       this.isMailgun = props.isMailgun;
       this.mailgunKey = props.mailgunKey;
       this.mailgunSubject = props.mailgunSubject;
-      this.mailgunSenderEmail = props.mailgunSenderEmail;
-      this.mailgunRecipientEmail = props.mailgunRecipientEmail;
+      this.mailgunSender = props.mailgunSender;
+      this.mailgunRecipient = props.mailgunRecipient;
 
       this.isS3 = props.isS3;
       this.awsAccessKey = props.awsAccessKey;
@@ -175,7 +175,7 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     app: function () {
       this.template('_package.json', 'package.json');
-      this.template('_config.json', 'config.json');
+      this.template('_secrets.json', 'secrets.json');
     },
 
     projectFiles: function () {

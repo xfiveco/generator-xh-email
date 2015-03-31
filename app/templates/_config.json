@@ -1,8 +1,0 @@
-{
-  "holder": true<% if (isMailgun) { %>,
-  "MailgunApiKey": "<%= mailgunKey %>"<% } %><% if (isLitmus) { %>,
-  "LitmusUsername": "<%= litmusUsername %>",
-  "LitmusPassword": "<%= litmusPassword %>"<% } %><% if (isS3) { %>,
-  "AWSAccessKeyId": "<%= awsAccessKey %>",
-  "AWSSecretKey": "<%= awsSecretKey %>"<% } %>
-}

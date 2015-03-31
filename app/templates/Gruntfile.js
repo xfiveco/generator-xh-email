@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    config: grunt.file.readJSON('config.json'),
+    config: grunt.file.readJSON('secrets.json'),
 
     // Paths
     paths: {
@@ -71,10 +71,10 @@ module.exports = function (grunt) {
     mailgun: {
       mailer: {
         options: {
-          key: '<%%= config.MailgunApiKey %>',
-          sender: '<%= mailgunSenderEmail %>',
-          recipient: '<%= mailgunRecipientEmail %>',
-          subject: '<%= mailgunSubject %>'
+          key: '<%%= config.mailgun.apiKey %>',
+          sender: '<%%= config.mailgun.sender %>',
+          recipient: '<%%= config.mailgun.recipient %>',
+          subject: '<%%= config.mailgun.subject %>'
         },
         src: ['<%%= paths.dist %>/' + grunt.option('template')]
       }
@@ -84,11 +84,11 @@ module.exports = function (grunt) {
     litmus: {
       test: {
         options: {
-          username: '<%%= config.LitmusUsername %>',
-          password: '<%%= config.LitmusPassword %>',
-          url: 'https://<%= litmusCompany %>.litmus.com',
+          username: '<%%= config.litmus.username %>',
+          password: '<%%= config.litmus.password %>',
+          url: 'https://<%%= config.litmus.company %>.litmus.com',
 
-          // https://<%= litmusCompany %>.litmus.com/emails/clients.xml
+          // https://<%%= config.litmus.company %>.litmus.com/emails/clients.xml
           clients: [
             'android22',          // Android 2.2
             'android4',           // Android 4
@@ -129,15 +129,15 @@ module.exports = function (grunt) {
     // Use Amazon S3 storage if you're using images in your email
     aws_s3: {
       options: {
-        accessKeyId: '<%%= config.AWSAccessKeyId %>',
-        secretAccessKey: '<%%= config.AWSSecretKey %>',
-        region: '<%= s3Region %>',
+        accessKeyId: '<%%= config.aws.accessKey %>',
+        secretAccessKey: '<%%= config.aws.secretKey %>',
+        region: '<%%= config.aws.region %>',
         uploadConcurrency: 5,
         downloadConcurrency: 5
       },
       prod: {
         options: {
-          bucket: '<%= s3Bucket %>',
+          bucket: '<%%= config.aws.bucket %>',
           differential: true,
           gzipRename: 'ext'
         },
@@ -153,7 +153,7 @@ module.exports = function (grunt) {
     // CDN will replace local paths with your Cloud CDN path
     cdn: {
       options: {
-        cdn: 'https://s3-<%= s3Region %>.amazonaws.com/<%= s3Bucket %>',
+        cdn: 'https://s3-<%%= config.aws.region %>.amazonaws.com/<%%= config.aws.bucket %>',
         flatten: true,
         supportedTypes: 'html'
       },
