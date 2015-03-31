@@ -10,7 +10,7 @@ The following software needs to be installed if you want to use Email Boilerplat
 Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
 
 #### Premailer Gem
-Install [Node.js](http://nodejs.org/) so you can work with `npm`, Node package manager.
+The [Premailer](https://github.com/premailer/premailer) gem is needed for Email Boilerplate Generator to run correctly.
 
 ```bash
 gem install premailer
@@ -23,14 +23,14 @@ Then install [Grunt](http://gruntjs.com/)'s command line interface (CLI) globall
 npm install -g grunt-cli
 ```
 
-### Yeoman
+#### Yeoman
 Email Boilerplate Generator is a [Yeoman](http://yeoman.io/) generator, so obviously it depends on it. You can easily install Yeoman with the following command:
 
 ```bash
 npm install -g yo
 ```
 
-### Email Boilerplate Generator
+#### Email Boilerplate Generator
 To install generator-email-boilerplate from npm, run:
 
 ```bash
