@@ -90,26 +90,36 @@ module.exports = function (grunt) {
 
           // https://<%= litmusCompany %>.litmus.com/emails/clients.xml
           clients: [
-            'android22',        // Android 2.2
-            'android4',         // Android 4
-            'androidgmailapp',  // Gmail App (Android)
-            'aolonline',        // AOL Mail (Explorer)
-            'appmail7',         // Apple Mail 7
-            'appmail8',         // Apple Mail 8
-            'chromegmailnew',   // Gmail (Chrome)
-            'chromeyahoo',      // Yahoo! Mail (Chrome)
-            'iphone5s',         // iPhone 5s (iOS 7)
-            'iphone6',          // iPhone 6 (iOS 8)
-            'iphone6plus',      // iPhone 6 Plus
-            'ipadmini',         // iPad Mini
-            'ipad',             // iPad (Retina)
-            'notes85',          // Lotus Notes 8.5
-            'ol2007',           // Outlook 2007
-            'ol2010',           // Outlook 2010
-            'ol2011',           // Outlook 2011
-            'ol2013',           // Outlook 2013
-            'outlookcom',       // Outlook.com (Explorer)
-            'windowsphone8'     // Windows Phone 8
+            'android22',          // Android 2.2
+            'android4',           // Android 4
+            'appmail7',           // Apple Mail 7
+            'appmail8',           // Apple Mail 8
+            'iphone5s',           // iPhone 5s (iOS 7)
+            'iphone6',            // iPhone 6 (iOS 8)
+            'iphone6plus',        // iPhone 6 Plus
+            'ipadmini',           // iPad Mini
+            'ipad',               // iPad (Retina)
+            'notes8',             // Lotus Notes 8
+            'notes85',            // Lotus Notes 8.5
+            'ol2007',             // Outlook 2007
+            'ol2010',             // Outlook 2010
+            'ol2011',             // Outlook 2011
+            'ol2013',             // Outlook 2013
+            'thunderbirdlatest',  // Thunderbird 31
+            'windowsphone8',      // Windows Phone 8
+            'androidgmailapp',    // Gmail (Android)
+            'gmailnew',           // Gmail (Explorer)
+            'ffgmailnew',         // Gmail (Firefox)
+            'chromegmailnew',     // Gmail (Chrome)
+            'aolonline',          // AOL Mail (Explorer)
+            'ffaolonline',        // AOL Mail (Firefox)
+            'chromeaolonline',    // AOL Mail (Chrome)
+            'outlookcom',         // Outlook.com (Explorer)
+            'ffoutlookcom',       // Outlook.com (Firefox)
+            'chromeoutlookcom',   // Outlook.com (Chrome)
+            'yahoo',              // Yahoo! Mail (Explorer)
+            'ffyahoo',            // Yahoo! Mail (Firefox)
+            'chromeyahoo'         // Yahoo! Mail (Chrome)
           ]
         },
         src: ['<%%= paths.dist %>/' + grunt.option('template')]
