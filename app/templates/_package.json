@@ -15,7 +15,7 @@
     "grunt-contrib-imagemin": "^0.9.4",
     "grunt-mailgun": "0.2.1",
     "grunt-premailer": "0.2.13",
-    "grunt-cloudfiles": "^0.3.0",
+    "grunt-aws-s3": "^0.12.3",
     "grunt-cdn": "^0.6.5",
     "grunt-litmus": "^0.1.8",
     "time-grunt": "^1.1.0",

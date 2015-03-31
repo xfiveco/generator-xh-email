@@ -1,0 +1,5 @@
+{
+  "MailgunApiKey": "<%= mailgunKey %>",
+  "AWSAccessKeyId": "<%= awsAccessKey %>",
+  "AWSSecretKey": "<%= awsSecretKey %>"
+}

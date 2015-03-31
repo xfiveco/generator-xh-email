@@ -3,3 +3,4 @@ node_modules
 .sass-cache
 .tmp
 *.css.map
+config.json

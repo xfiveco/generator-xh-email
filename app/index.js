@@ -39,7 +39,7 @@ module.exports = yeoman.generators.Base.extend({
           return response.isMailgun === true;
         },
         name: 'mailgunKey',
-        message: 'Enter Mailgun Api Key',
+        message: 'Enter Mailgun Api Key (will be stored secretly and ignored from Git repo)',
         validate: function (input) {
           return !!input;
         }
@@ -71,16 +71,65 @@ module.exports = yeoman.generators.Base.extend({
         validate: function (input) {
           return !!input;
         }
+      }, {
+        type: 'confirm',
+        name: 'isS3',
+        message: 'Use Amazon AWS S3 to upload image files to remote CDN? (require Amazon S3 account)',
+        default: true
+      }, {
+        when: function (response) {
+          return response.isS3 === true;
+        },
+        name: 'awsAccessKey',
+        message: 'Enter AWS S3 Access Key (will be stored secretly and ignored from Git repo)',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isS3 === true;
+        },
+        name: 'awsSecretKey',
+        message: 'Enter AWS S3 Secret Key (will be stored secretly and ignored from Git repo)',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isS3 === true;
+        },
+        name: 's3Region',
+        message: 'Enter AWS S3 Region code',
+        default: 'eu-west-1',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isS3 === true;
+        },
+        name: 's3Bucket',
+        message: 'Enter AWS S3 Bucket ID',
+        validate: function (input) {
+          return !!input;
+        }
       }];
 
     this.prompt(prompts, function (props) {
       this.projectName = props.projectName;
       this.projectAuthor = props.projectAuthor;
+
       this.isMailgun = props.isMailgun;
       this.mailgunKey = props.mailgunKey;
       this.mailgunSubject = props.mailgunSubject;
       this.mailgunSenderEmail = props.mailgunSenderEmail;
       this.mailgunRecipientEmail = props.mailgunRecipientEmail;
+
+      this.isS3 = props.isS3;
+      this.awsAccessKey = props.awsAccessKey;
+      this.awsSecretKey = props.awsSecretKey;
+      this.s3Region = props.s3Region;
+      this.s3Bucket = props.s3Bucket;
 
       done();
     }.bind(this));
@@ -89,6 +138,7 @@ module.exports = yeoman.generators.Base.extend({
   writing: {
     app: function () {
       this.template('_package.json', 'package.json');
+      this.template('_config.json', 'config.json');
     },
 
     projectFiles: function () {
@@ -109,6 +159,10 @@ module.exports = yeoman.generators.Base.extend({
 
     styleFiles: function () {
       this.template('src/scss/_main.scss', 'src/scss/main.scss');
+    },
+
+    structureFiles: function () {
+      this.copy('src/img/keep', 'src/img/.keep');
     }
   },
 

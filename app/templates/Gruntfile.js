@@ -6,9 +6,10 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    config: grunt.file.readJSON('config.json'),
 
-    // Configs
-    config: {
+    // Paths
+    paths: {
       src: 'src',
       dist: 'dist',
       layouts: 'layouts',
@@ -23,7 +24,7 @@ module.exports = function (grunt) {
           outputStyle: 'expanded'
         },
         files: {
-          '<%%= config.tmp %>/css/main.css': '<%%= config.src %>/scss/main.scss'
+          '<%%= paths.tmp %>/css/main.css': '<%%= paths.src %>/scss/main.scss'
         }
       }
     },
@@ -31,12 +32,12 @@ module.exports = function (grunt) {
     // Assembles your email content with html layout
     assemble: {
       options: {
-        layoutdir: '<%%= config.src %>/<%%= config.layouts %>',
+        layoutdir: '<%%= paths.src %>/<%%= paths.layouts %>',
         flatten: true
       },
       pages: {
-        src: ['<%%= config.src %>/<%%= config.templates %>/*.hbs'],
-        dest: '<%%= config.dist %>/'
+        src: ['<%%= paths.src %>/<%%= paths.templates %>/*.hbs'],
+        dest: '<%%= paths.dist %>/'
       }
     },
 
@@ -48,7 +49,7 @@ module.exports = function (grunt) {
         },
         files: [{
             expand: true,
-            src: ['<%%= config.dist %>/*.html'],
+            src: ['<%%= paths.dist %>/*.html'],
             dest: ''
         }]
       },
@@ -59,31 +60,69 @@ module.exports = function (grunt) {
         },
         files: [{
             expand: true,
-            src: ['<%%= config.dist %>/*.html'],
+            src: ['<%%= paths.dist %>/*.html'],
             dest: '',
             ext: '.txt'
         }]
       }
-    },
+    },<% if (isMailgun) { %>
 
     // Use Mailgun option if you want to email the design to your inbox or to something like Litmus
     mailgun: {
       mailer: {
         options: {
-          key: '<%= mailgunKey %>',
+          key: '<%%= config.MailgunApiKey %>',
           sender: '<%= mailgunSenderEmail %>',
           recipient: '<%= mailgunRecipientEmail %>',
           subject: '<%= mailgunSubject %>'
         },
-        src: ['<%%= config.dist %>/' + grunt.option('template')]
+        src: ['<%%= paths.dist %>/' + grunt.option('template')]
+      }
+    },<% } %><% if (isS3) { %>
+
+    // Use Amazon S3 storage if you're using images in your email
+    aws_s3: {
+      options: {
+        accessKeyId: '<%%= config.AWSAccessKeyId %>',
+        secretAccessKey: '<%%= config.AWSSecretKey %>',
+        region: '<%= s3Region %>',
+        uploadConcurrency: 5,
+        downloadConcurrency: 5
+      },
+      prod: {
+        options: {
+          bucket: '<%= s3Bucket %>',
+          differential: true,
+          gzipRename: 'ext'
+        },
+        files: [{
+          expand: true,
+          cwd: '<%%= paths.src %>/img/',
+          src: ['**'],
+          dest: '/'
+        }]
       }
     },
+
+    // CDN will replace local paths with your Cloud CDN path
+    cdn: {
+      options: {
+        cdn: 'https://s3-<%= s3Region %>.amazonaws.com/<%= s3Bucket %>',
+        flatten: true,
+        supportedTypes: 'html'
+      },
+      dist: {
+        cwd: './<%%= paths.dist %>/',
+        src: ['*.html'],
+        dest: './<%%= paths.dist %>/'
+      }
+    },<% } %>
 
     // Watches for changes and reloads a connected browsers
     browserSync: {
       bsFiles: {
         src: [
-          '<%%= config.dist %>/*.txt'
+          '<%%= paths.dist %>/*'
         ]
       },
 
@@ -106,7 +145,7 @@ module.exports = function (grunt) {
       },
 
       compileCSS: {
-        files: ['<%%= config.src %>/**/*'],
+        files: ['<%%= paths.src %>/**/*'],
         tasks: ['build']
       }
     }
@@ -114,25 +153,25 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-browser-sync');
-  grunt.loadNpmTasks('grunt-mailgun');
-  grunt.loadNpmTasks('grunt-premailer');
-  grunt.loadNpmTasks('grunt-cloudfiles');
-  grunt.loadNpmTasks('grunt-cdn');
+  grunt.loadNpmTasks('grunt-browser-sync');<% if (isMailgun) { %>
+  grunt.loadNpmTasks('grunt-mailgun');<% } %>
+  grunt.loadNpmTasks('grunt-premailer');<% if (isS3) { %>
+  grunt.loadNpmTasks('grunt-aws-s3');
+  grunt.loadNpmTasks('grunt-cdn');<% } %>
   grunt.loadNpmTasks('grunt-litmus');
   grunt.loadNpmTasks('grunt-notify');
-  grunt.loadNpmTasks('assemble');
+  grunt.loadNpmTasks('assemble');<% if (isMailgun) { %>
+
+  // Use grunt send if you want to actually send the email to your inbox
+  // grunt send --template=index.html
+  grunt.registerTask('send', ['mailgun']);<% } %><% if (isS3) { %>
+
+  // Upload images to our CDN on Rackspace Cloud Files
+  grunt.registerTask('cdnify', ['build', 'aws_s3', 'cdn']);<% } %>
 
   // Main build task where actually all of the magic happen
   grunt.registerTask('build', ['sass', 'assemble', 'premailer']);
 
   // Where we tell Grunt what to do when we type "grunt" into the terminal.
   grunt.registerTask('default', ['browserSync', 'watch']);
-
-  // Use grunt send if you want to actually send the email to your inbox
-  // grunt send --template=index.html
-  grunt.registerTask('send', ['mailgun']);
-
-  // Upload images to our CDN on Rackspace Cloud Files
-  // grunt.registerTask('cdnify', ['default','cloudfiles','cdn']);
 };
