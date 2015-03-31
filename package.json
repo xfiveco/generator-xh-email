@@ -1,7 +1,7 @@
 {
   "name": "generator-email-boilerplate",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.1.0",
+  "description": "Yeoman generator for creating email templates",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "piotrkulpinski/generator-email-boilerplate",
@@ -20,12 +20,14 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "generator",
+    "email"
+    "newsletter"
   ],
   "dependencies": {
     "yeoman-generator": "^0.18.9",
-    "chalk": "^1.0.0",
-    "yosay": "^1.0.2"
+    "chalk": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "*"

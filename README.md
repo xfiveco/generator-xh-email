@@ -1,6 +1,6 @@
 # Email Boilerplate Generator
 
-> [Yeoman](http://yeoman.io) generator
+> [Yeoman](http://yeoman.io) generator for creating email templates
 
 ## Getting Started
 
