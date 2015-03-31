@@ -73,6 +73,38 @@ module.exports = yeoman.generators.Base.extend({
         }
       }, {
         type: 'confirm',
+        name: 'isLitmus',
+        message: 'Use Litmus to test your emails on various clients? (require Litmus account)',
+        default: true
+      }, {
+        when: function (response) {
+          return response.isLitmus === true;
+        },
+        name: 'litmusUsername',
+        message: 'Enter Litmus account username',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isLitmus === true;
+        },
+        name: 'litmusPassword',
+        message: 'Enter Litmus account password',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        when: function (response) {
+          return response.isLitmus === true;
+        },
+        name: 'litmusCompany',
+        message: 'Enter Litmus company name',
+        validate: function (input) {
+          return !!input;
+        }
+      }, {
+        type: 'confirm',
         name: 'isS3',
         message: 'Use Amazon AWS S3 to upload image files to remote CDN? (require Amazon S3 account)',
         default: true
@@ -130,6 +162,11 @@ module.exports = yeoman.generators.Base.extend({
       this.awsSecretKey = props.awsSecretKey;
       this.s3Region = props.s3Region;
       this.s3Bucket = props.s3Bucket;
+
+      this.isLitmus = props.isLitmus;
+      this.litmusUsername = props.litmusUsername;
+      this.litmusPassword = props.litmusPassword;
+      this.litmusCompany = props.litmusCompany;
 
       done();
     }.bind(this));

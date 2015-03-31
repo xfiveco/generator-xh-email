@@ -78,6 +78,24 @@ module.exports = function (grunt) {
         },
         src: ['<%%= paths.dist %>/' + grunt.option('template')]
       }
+    },<% } %><% if (isLitmus) { %>
+
+    // Send your email template to Litmus for testing
+    litmus: {
+      test: {
+        options: {
+          username: '<%%= config.LitmusUsername %>',
+          password: '<%%= config.LitmusPassword %>',
+          url: 'https://<%= litmusCompany %>.litmus.com',
+
+          // https://#{company}.litmus.com/emails/clients.xml
+          clients: ['android4', 'aolonline', 'androidgmailapp', 'aolonline', 'ffaolonline',
+          'chromeaolonline', 'appmail6', 'iphone6', 'ipadmini', 'ipad', 'chromegmailnew',
+          'iphone6plus', 'notes85', 'ol2002', 'ol2003', 'ol2007', 'ol2010', 'ol2011',
+          'ol2013', 'outlookcom', 'chromeoutlookcom', 'chromeyahoo', 'windowsphone8']
+        },
+        src: ['<%%= paths.dist %>/' + grunt.option('template')]
+      }
     },<% } %><% if (isS3) { %>
 
     // Use Amazon S3 storage if you're using images in your email
@@ -157,14 +175,18 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-mailgun');<% } %>
   grunt.loadNpmTasks('grunt-premailer');<% if (isS3) { %>
   grunt.loadNpmTasks('grunt-aws-s3');
-  grunt.loadNpmTasks('grunt-cdn');<% } %>
-  grunt.loadNpmTasks('grunt-litmus');
+  grunt.loadNpmTasks('grunt-cdn');<% } %><% if (isLitmus) { %>
+  grunt.loadNpmTasks('grunt-litmus');<% } %>
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('assemble');<% if (isMailgun) { %>
 
   // Use grunt send if you want to actually send the email to your inbox
   // grunt send --template=index.html
-  grunt.registerTask('send', ['mailgun']);<% } %><% if (isS3) { %>
+  grunt.registerTask('send', ['mailgun']);<% } %><% if (isLitmus) { %>
+
+  // Test email templates using Litmus
+  // grunt test --template=index.html
+  grunt.registerTask('test', ['litmus']);<% } %><% if (isS3) { %>
 
   // Upload images to our CDN on Rackspace Cloud Files
   grunt.registerTask('cdnify', ['build', 'aws_s3', 'cdn']);<% } %>
