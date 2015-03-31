@@ -81,7 +81,7 @@ module.exports = yeoman.generators.Base.extend({
           return response.isLitmus === true;
         },
         name: 'litmusUsername',
-        message: 'Enter Litmus account username',
+        message: 'Enter Litmus account username (will be stored secretly and ignored from Git repo)',
         validate: function (input) {
           return !!input;
         }
@@ -90,7 +90,7 @@ module.exports = yeoman.generators.Base.extend({
           return response.isLitmus === true;
         },
         name: 'litmusPassword',
-        message: 'Enter Litmus account password',
+        message: 'Enter Litmus account password (will be stored secretly and ignored from Git repo)',
         validate: function (input) {
           return !!input;
         }

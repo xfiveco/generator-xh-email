@@ -88,11 +88,29 @@ module.exports = function (grunt) {
           password: '<%%= config.LitmusPassword %>',
           url: 'https://<%= litmusCompany %>.litmus.com',
 
-          // https://#{company}.litmus.com/emails/clients.xml
-          clients: ['android4', 'aolonline', 'androidgmailapp', 'aolonline', 'ffaolonline',
-          'chromeaolonline', 'appmail6', 'iphone6', 'ipadmini', 'ipad', 'chromegmailnew',
-          'iphone6plus', 'notes85', 'ol2002', 'ol2003', 'ol2007', 'ol2010', 'ol2011',
-          'ol2013', 'outlookcom', 'chromeoutlookcom', 'chromeyahoo', 'windowsphone8']
+          // https://<%= litmusCompany %>.litmus.com/emails/clients.xml
+          clients: [
+            'android22',        // Android 2.2
+            'android4',         // Android 4
+            'androidgmailapp',  // Gmail App (Android)
+            'aolonline',        // AOL Mail (Explorer)
+            'appmail7',         // Apple Mail 7
+            'appmail8',         // Apple Mail 8
+            'chromegmailnew',   // Gmail (Chrome)
+            'chromeyahoo',      // Yahoo! Mail (Chrome)
+            'iphone5s',         // iPhone 5s (iOS 7)
+            'iphone6',          // iPhone 6 (iOS 8)
+            'iphone6plus',      // iPhone 6 Plus
+            'ipadmini',         // iPad Mini
+            'ipad',             // iPad (Retina)
+            'notes85',          // Lotus Notes 8.5
+            'ol2007',           // Outlook 2007
+            'ol2010',           // Outlook 2010
+            'ol2011',           // Outlook 2011
+            'ol2013',           // Outlook 2013
+            'outlookcom',       // Outlook.com (Explorer)
+            'windowsphone8'     // Windows Phone 8
+          ]
         },
         src: ['<%%= paths.dist %>/' + grunt.option('template')]
       }
