@@ -22,7 +22,7 @@
   "keywords": [
     "yeoman-generator",
     "generator",
-    "email"
+    "email",
     "newsletter"
   ],
   "dependencies": {
