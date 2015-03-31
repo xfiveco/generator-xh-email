@@ -17,6 +17,32 @@ module.exports = function (grunt) {
       tmp: '.tmp'
     },
 
+    notify: {
+      options: {
+        title: '<%= projectName %>'
+      }<% if (isMailgun) { %>,
+      mailgun: {
+        options: {
+          message: 'Email successfully sent to <%%= config.mailgun.recipient %>'
+        }
+      }<% } %><% if (isLitmus) { %>,
+      litmus: {
+        options: {
+          message: 'Email tests successfully sent to Litmus'
+        }
+      }<% } %><% if (isS3) { %>,
+      cdnify: {
+        options: {
+          message: 'Assets successfully sent to S3'
+        }
+      }<% } %>,
+      build: {
+        options: {
+          message: 'Build completed'
+        }
+      }
+    },
+
     // Takes your scss files and compiles them to css
     sass: {
       dist: {
@@ -210,17 +236,17 @@ module.exports = function (grunt) {
 
   // Use grunt send if you want to actually send the email to your inbox
   // grunt send --template=index.html
-  grunt.registerTask('send', ['mailgun']);<% } %><% if (isLitmus) { %>
+  grunt.registerTask('send', ['mailgun', 'notify:mailgun']);<% } %><% if (isLitmus) { %>
 
   // Test email templates using Litmus
   // grunt test --template=index.html
-  grunt.registerTask('test', ['litmus']);<% } %><% if (isS3) { %>
+  grunt.registerTask('test', ['litmus', 'notify:litmus']);<% } %><% if (isS3) { %>
 
   // Upload images to our CDN on Rackspace Cloud Files
-  grunt.registerTask('cdnify', ['build', 'aws_s3', 'cdn']);<% } %>
+  grunt.registerTask('cdnify', ['aws_s3', 'cdn', 'notify:cdnify']);<% } %>
 
   // Main build task where actually all of the magic happen
-  grunt.registerTask('build', ['sass', 'assemble', 'premailer']);
+  grunt.registerTask('build', ['sass', 'assemble', 'premailer', 'notify:build']);
 
   // Where we tell Grunt what to do when we type "grunt" into the terminal.
   grunt.registerTask('default', ['browserSync', 'watch']);
