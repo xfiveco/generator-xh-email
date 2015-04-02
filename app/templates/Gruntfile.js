@@ -171,7 +171,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%%= paths.src %>/img/',
           src: ['**'],
-          dest: '/'
+          dest: '/<%%= paths.src %>/img/'
         }]
       }
     },
