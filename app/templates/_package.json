@@ -1,6 +1,6 @@
 {
-  "name": "<%= _.slugify(projectName) %>",
-  "description": "<%= _.slugify(projectName) %>",
+  "name": "<%= _.kebabCase(projectName) %>",
+  "description": "<%= _.kebabCase(projectName) %>",
   "version": "0.0.1",
   "repository": {
     "type": "git",

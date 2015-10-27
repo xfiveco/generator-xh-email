@@ -26,8 +26,9 @@
     "newsletter"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.18.9",
-    "chalk": "^1.0.0"
+    "yeoman-generator": "^0.21.1",
+    "lodash": "^3.10.1",
+    "chalk": "^1.1.1"
   },
   "devDependencies": {
     "mocha": "*"
