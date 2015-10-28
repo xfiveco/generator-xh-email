@@ -17,8 +17,8 @@ module.exports = yeoman.generators.Base.extend({
     // Have Yeoman greet the user.
     this.log('');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
-    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' Email Boilerplate ') + '\n');
-    this.log(chalk.white('  A Yeoman generator for creating email templates') + '\n');
+    this.log(chalk.cyan('  Welcome to'), chalk.white.bgRed.bold(' XH Email Generator ') + '\n');
+    this.log(chalk.white('  A Yeoman generator for scaffolding email templates') + '\n');
     this.log(chalk.cyan(' ***********************************************************') + '\n');
 
     this.prompt(prompts.questions, function (answers) {
@@ -52,8 +52,8 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
+    if (!this.options['skip-install']) {
+      this.npmInstall();
+    }
   }
 });

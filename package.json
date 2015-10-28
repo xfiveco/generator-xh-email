@@ -1,14 +1,24 @@
 {
-  "name": "generator-email-boilerplate",
+  "name": "generator-xh-email",
   "version": "0.1.2",
-  "description": "Yeoman generator for creating email templates",
+  "description": "A Yeoman generator for scaffolding email templates",
+  "keywords": [
+    "yeoman-generator",
+    "frontend",
+    "email",
+    "newsletter",
+    "premailer",
+    "litmus",
+    "mailgun",
+    "xhtmlized"
+  ],
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "piotrkulpinski/generator-email-boilerplate",
+  "repository": "xhtmlized/generator-xh-email",
   "author": {
-    "name": "Piotr Kulpinski",
-    "email": "piotr@kulpinski.pl",
-    "url": "https://github.com/piotrkulpinski"
+    "name": "XHTMLized",
+    "email": "hello@xhtmlized.com",
+    "url": "https://github.com/xhtmlized"
   },
   "engines": {
     "node": ">=0.10.0"
@@ -16,9 +26,6 @@
   "scripts": {
     "test": "mocha"
   },
-  "files": [
-    "app"
-  ],
   "keywords": [
     "yeoman-generator",
     "generator",

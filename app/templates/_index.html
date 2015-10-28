@@ -1,152 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
   <title>Project Index - <%= projectName %></title>
-
-  <link rel="stylesheet" media="all" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" media="all" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"><% if (useBranding) { %>
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/xhtmlized/generator-xh/master/docs/img/favicon.png"><% } %>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <style>
-    .clearfix:after,.page-foot:after,.file-list-element:after{content:"";display:table;clear:both}
-    h1,h2,h3,h4,h5,h6,blockquote,p,ul,ol,dl,dt,dd,img,figure{margin:0;padding:0;list-style:none}
-    html{font-size:62.5%;box-sizing:border-box}
-    html *,html :before,html :after{box-sizing:inherit}
-    body{margin:0;background:#f5f5f5;color:#333;font-family:"Open Sans","Arial","Helvetica Neue",Helvetica,serif;font-size:1.6em;line-height:1.4}
-    a{color:#3BB3E1;text-decoration:none;transition:color .25s ease-in-out}
-    a:hover{color:#18799e}
-    .container{position:relative;max-width:1000px;margin:0 auto}
-    @media (min-width: 768px) {
-    .container{padding:20px}
+  <!--
+    html, body, div, span, h1, h2, h3, h4, h5, h6, p, pre, a, abbr, acronym, code, em, img, strong, sub, sup, dl, dt, dd, ol, ul, li { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+    article, aside, figure, footer, header, hgroup, nav, section { display: block; }
+    body { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; padding: 0 20px; min-width: 280px; background: #eaeaea; color: #666; font: normal 15px/1.3 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    h1, h2, h3 { line-height: 1.0; }
+    ul li { list-style: none; }
+    a { color: #999; text-decoration: none; }
+    a:hover { color: #333; text-decoration: underline; }
+
+    .container { margin: 80px auto; max-width: 1240px; padding: 70px 0 0; background: #fff; border: 2px solid #e5e5e5; border-width: 0 2px 2px 0; }
+
+    .site-name { float: right; }
+    .site-name a { display: block; width: 169px; height: 30px; text-indent: -999em; background-image: url(data:image/png;base64,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); }
+    .header { border-bottom: 1px solid #d7d7d7; margin: 0 5%; padding-bottom: 50px; }
+    .header img { display: block; }
+    .header h1 { font-size: 300%; margin-bottom: 15px;color:#ef4c23;}
+    .header p { font-size: 200%; }
+
+    .content { float: left; width: 60%; margin: 60px 5% 20px 5%; font-size: 100%; }
+
+    section:after,
+    .files article li:after,
+    .files header ul li:after,
+    .files header:after,
+    .files article:after,
+    .footer:after { clear: both; content: "."; display: block; height: 0; visibility: hidden; }
+
+    section header { float: left; width: 35%; }
+    section header h2 {  font-size: 160%; color: #999; }
+    section article { float: right; width: 65% }
+    section h3 { float: none; width: auto; margin-bottom: 15px; font-size: 160%; }
+    section h3.wip { color: #00a6b6; }
+    section h3.done { color: #00ad69; }
+    section p { font-size: 110%; color: #999; }
+    section p.credentials { clear: both; padding: 5px 0 0 34px; font-size: 100%; }
+    section p strong { color: #666; }
+
+    .status { padding: 0 0 60px 0; border-bottom: 1px solid #ededed; }
+    .status span { color: #666; }
+
+    .files { padding: 60px 0 0 0; }
+    .files a:hover { text-decoration: none; }
+
+    .files .done strong { color: #00ad69; }
+    .files .wip strong { color: #00a6b6; }
+    .files header { font-size: 100%; }
+    .files header ul { margin: 30px 0 0; }
+    .files header li { padding: 0 0 8px; font-size: 100%; color: #333; }
+    .files header li i { float: left ; width: 20px; height: 20px; margin: 0 10px 0 0; background: #999 }
+    .files header li.done i { background: #00ad69; }
+    .files header li.wip i { background: #00a6b6; }
+
+    .files article > ul { margin: 0 0 50px; }
+    .files article > ul > li { padding: 16px 0; border-bottom: 1px solid #ededed; line-height: 28px; }
+    .files article > ul > li:first-child { padding-top: 0; }
+    .files article > ul > li a { float: left;width: 86%; }
+    .files article > ul > li strong { font-size: 140%; float: left; }
+    .files article > ul > li a strong { width: 65%; }
+    .files article > ul > li span { display: inline-block; margin-top: 6px; width: 35%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; -moz-binding: url(<q>assets/xml/ellipsis.xml#ellipsis</q>); }
+    .files article > ul > li i { font-size: 130%; }
+    .files article > ul > li ul { float: right; }
+    .files article > ul > li li { float: left; margin-left: 10px; }
+    .files article > ul > li li a { white-space: nowrap; }
+    .files article > ul > li li .fa { margin-right: 5px; line-height: 1; vertical-align: middle; }
+
+    .fa-file-o, .fa-file-text-o { float: left; width: 5%; margin: 3px 1% 0; }
+    .fa-file-o, .fa-file-text-o, .fa-wordpress, .fa-lock { float: left; width: 5%; margin: 3px 1% 0; }
+    .fa-check { float: right; width: 5%; margin: -2px 0 0 2%; color: #333; font-size: 180%!important; visibility: hidden; }
+    .done .fa-check { visibility: visible; }
+
+    .sidebar { float: right; width: 25%; margin: 60px 5% 60px 0; }
+    .sidebar h3 { margin-bottom: 12px; font-weight: bold; color: #010101; font-size: 120%; }
+    .sidebar p { margin-bottom: 12px; font-size: 120%; }
+    .sidebar p strong { color: #333; }
+
+    .footer { clear: both; margin: 0 5%; padding: 60px 0; border-top: 1px solid #d7d7d7; }
+    .footer p { float: left; font-size: 110%; }
+    .footer a { color: #333; display: inline-block; border-bottom: 2px solid #ffda27; font-weight: bold; }
+    .footer a:hover { text-decoration: none; border-color: #fff; }
+    .footer img { vertical-align: middle; }
+    .footer .powered { float: right; }
+
+    @media screen and (max-width: 800px) {
+      body { font-size: 90%; }
+      .sidebar { float: none; width: 90%; margin: 0 5%; padding: 60px 0;  border-top: 1px solid #d7d7d7; }
+      .content { float: none; width: 90%; }
+      .files .legend li { display: block }
+      section h3 { float: none; }
+      section p,
+      section ul { margin: 0 }
+      .files .legend { margin: 20px 0 0; }
+      .files .legend ul,
+      .files .legend ul li { display: block; margin: 0; }
+      .footer { padding-top: 25px; }
     }
-    .content{padding:20px;background:#fff;border:1px solid #eee}
-    @media (min-width: 768px) {
-    .content{padding:40px}
+
+    @media screen and (max-width: 639px) {
+      body { font-size: 80%; }
+      .container { margin: 40px auto; padding: 40px 0 0; }
     }
-    @media (min-width: 768px) {
-    .inner-content{float:left;width:60%}
+
+    @media screen and (max-width: 480px) {
+      body { font-size: 70%; }
+      section header { float: none; width: 100%; margin-bottom: 20px; }
+      section article { float: none; width: 100%; }
+      section { padding: 30px 0 0; }
+      .status,
+      .header { padding: 0 0 30px; }
+      .files,
+      .sidebar,
+      .footer { padding: 30px 0; }
+      .files article ul,
+      .content { margin-bottom: 30px; }
+      .content { margin-top: 30px; }
+      .files header li { float: left; margin-right: 10px; }
+      .files header li i { margin: -3px 10px 0 0; }
+      .files article li span { margin-top: 5px; }
+      .footer p,
+      .footer .powered,
+      .site-name { display: block; float: none; margin-bottom: 20px; }
     }
-    .inner-sidebar{margin-top:60px}
-    @media (min-width: 768px) {
-    .inner-sidebar{float:right;width:40%;padding-left:10%;margin-top:0}
+
+    @media screen and (max-width: 320px) {
+      .container { margin: 30px auto; padding: 30px 0 0; }
+      body { font-size: 60%; }
+      .files article li span { margin-top: 3px; }
     }
-    .page-head{padding-bottom:40px}
-    @media (min-width: 768px) {
-    .page-head{padding-bottom:80px;text-align:center}
-    }
-    .page-title{color:#3BB3E1;font-size:30px;font-size:3rem;font-weight:400;line-height:1.8}
-    @media (min-width: 768px) {
-    .page-title{font-size:36px;font-size:3.6rem}
-    }
-    .page-subtitle{color:#666;font-size:18px;font-size:1.8rem;font-weight:300}
-    .page-foot{clear:both;padding-top:40px;margin-top:40px;border-top:1px solid #eee;color:#aaa;font-size:14px;font-size:1.4rem;text-align:center}
-    @media (min-width: 768px) {
-    .page-foot{margin-top:80px}
-    }
-    .page-foot a{color:#666}
-    .page-foot a:hover{text-decoration:underline}
-    @media (min-width: 768px) {
-    .page-foot-date{float:left}
-    }
-    .page-foot-date strong{color:#666;font-weight:600}
-    .page-foot-powered{margin-top:10px}
-    @media (min-width: 768px) {
-    .page-foot-powered{float:right;margin-top:0}
-    }
-    .page-foot .fa{margin-right:5px}
-    .heading{margin-top:30px;margin-bottom:20px;font-size:20px;font-size:2rem;font-weight:600}
-    .heading:first-child{margin-top:0}
-    @media (min-width: 768px) {
-    .heading{font-size:26px;font-size:2.6rem}
-    }
-    .status{color:#aaa;font-weight:400}
-    .status .fa{margin-right:.5em}
-    .text{color:#aaa}
-    .text--lead{color:#666}
-    .text+.text{margin-top:1em}
-    @media (min-width: 768px) {
-    .file-list{margin-bottom:50px}
-    }
-    .file-list-element{margin-top:.75em;padding-top:.75em;border-top:1px solid #eee;font-size:16px;font-size:1.6rem}
-    .file-list-element:first-child{margin-top:0;padding-top:0;border-top:0}
-    @media (min-width: 768px) {
-    .file-list-element{font-size:20px;font-size:2rem}
-    }
-    .file-list-title{float:left}
-    .file-list-title>.fa{float:left;margin-right:.5em;color:#eee;font-size:24px;font-size:2.4rem}
-    @media (min-width: 768px) {
-    .file-list-title>.fa{font-size:28px;font-size:2.8rem}
-    }
-    .file-list-title strong{font-weight:400}
-    .file-types{float:right;margin-left:1em;font-size:14px;font-size:1.4rem;line-height:2}
-    .file-types h4{display:none}
-    @media (min-width: 768px) {
-    .file-types h4{display:block}
-    }
-    .file-types p{color:#aaa}
-    .file-types h4,.file-types ul,.file-types li{float:left}
-    .file-types li{margin-left:.5em}
-    @media (min-width: 768px) {
-    .file-types li{margin-left:1em}
-    }
+  -->
   </style>
 </head>
-
 <body>
-  <div class="container">
-    <div class="content">
-      <header class="page-head">
-        <h1 class="page-title"><%= projectName %></h1>
-        <p class="page-subtitle">Have a look at your files</p>
+<div class="container">
+  <header class="header"><% if (useBranding) { %>
+    <span class="site-name"><a href="http://xhtmlized.com/">XHTMLized</a></span><% } %>
+    <h1>Test</h1>
+    <p>Have a look at your files</p>
+  </header>
+  <!-- / header -->
+  <div class="content">
+    <section class="status">
+      <header>
+        <h2>Current Status</h2>
       </header>
-      <!-- / page-head -->
+      <article>
+        <h3 class="wip">In Development</h3>
+        <p>Started on <span><%= (new Date()).toString().split(' ').splice(1,3).join(' ') %></span></p>
+      </article>
+    </section>
+    <section class="files">
+      <header>
+        <h2>Front-end</h2>
+        <ul>
+          <li class="done"><i></i>Completed</li>
+          <li class="wip"><i></i>In Development</li>
+          <li><i></i>Not Yet Started</li>
+        </ul>
+      </header>
+      <article>
+        <ul>
+          <li>
+            <i class="fa fa-file-text-o"></i>
+            <strong>Index</strong>
 
-      <div class="clearfix">
-        <section class="inner-content">
-          <h2 class="heading">Email templates:</h2>
-
-          <ul class="file-list">
-            <li class="file-list-element">
-              <div class="file-list-title">
-                <i class="fa fa-file-text-o"></i>
-                <strong>Index</strong>
-              </div>
-
-              <div class="file-types">
-                <h4>Types:</h4>
-                <ul>
-                  <li><a href="dist/index.html"><i class="fa fa-html5"></i> HTML</a></li>
-                  <li><a href="dist/index.txt"><i class="fa fa-align-left"></i> TXT</a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </section>
-        <!-- / inner-content -->
-
-        <aside class="inner-sidebar">
-          <h2 class="heading">Status</h2>
-          <h4 class="status"><i class="fa fa-gears"></i> In development</h4>
-
-          <h2 class="heading">Instructions</h2>
-          <p class="text text--lead">The information reported on the left is an outlined representation of your entire project. Please review it periodically to ensure it’s complete and up to date.</p>
-          <p class="text">When completed, all your deliverable files will be located inside the dist folder. No files found outside of that folder should be uploaded to your server (e.g. this file).</p>
-        </aside>
-        <!-- / inner-sidebar -->
-      </div>
-      <!-- / clearfix -->
-
-      <footer class="page-foot">
-        <p class="page-foot-date"><i class="fa fa-clock-o"></i> Started on: <strong><%= (new Date()).toString().split(' ').splice(1,3).join(' ') %></strong></p>
-        <p class="page-foot-powered"><i class="fa fa-code"></i> Powered by <a href="https://github.com/piotrkulpinski/generator-email-boilerplate" target="_blank">generator-email-boilerplate</a></p>
-      </footer>
-      <!-- / page-foot -->
-
-    </div>
-    <!-- / content -->
+            <ul>
+              <li><a href="dist/index.html"><i class="fa fa-html5"></i> HTML</a></li>
+              <li><a href="dist/index.txt"><i class="fa fa-align-left"></i> TXT</a></li>
+            </ul>
+          </li>
+        </ul>
+      </article>
+    </section>
   </div>
-  <!-- / container -->
+  <!-- / content -->
 
+  <aside class="sidebar">
+    <section>
+      <h3>Instructions</h3>
+      <p><strong>The information reported on the left is an outlined representation of your entire project. Please review it periodically to ensure it’s complete and up to date.</strong></p>
+      <p>When completed, all your deliverable files will be located inside the <code>dist</code> folder. No files found outside of that folder should be uploaded to your server (e.g. this file).</p>
+    </section>
+  </aside>
+  <!-- / sidebar -->
+
+  <footer class="footer"><% if (useBranding) { %>
+    <p>Thanks for choosing <a href="http://xhtmlized.com/">XHTMLized.com</a></p><% } %>
+    <p class="powered">Powered by <a href="https://github.com/xhtmlized/generator-xh">XH Generator</a></p>
+  </footer>
+  <!-- / footer -->
+
+</div>
+<!-- / container -->
 </body>
 </html>

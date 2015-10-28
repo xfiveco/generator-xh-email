@@ -4,4 +4,4 @@ node_js:
   - '0.10'
 before_install:
   - currentfolder=${PWD##*/}
-  - if [ "$currentfolder" != 'generator-email-boilerplate' ]; then cd .. && eval "mv $currentfolder generator-email-boilerplate" && cd generator-email-boilerplate; fi
+  - if [ "$currentfolder" != 'generator-xh-email' ]; then cd .. && eval "mv $currentfolder generator-xh-email" && cd generator-xh-email; fi

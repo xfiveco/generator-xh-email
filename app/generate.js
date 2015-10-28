@@ -34,7 +34,6 @@ var generate = {
   projectFiles: function () {
     helpers.copy.call(this, 'editorconfig', '.editorconfig');
     helpers.copy.call(this, 'gitignore', '.gitignore');
-    helpers.copy.call(this, 'Gemfile', 'Gemfile');
     helpers.copy.call(this, 'Gruntfile.js', 'Gruntfile.js', this.prompts);
   },
 

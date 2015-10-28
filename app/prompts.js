@@ -9,11 +9,17 @@ var Prompts = {
         return !!input;
       }
     }, {
-      name: 'projectAuthor',
-      message: 'Please enter project\'s author',
-      validate: function (input) {
-        return !!input;
-      }
+      type: 'confirm',
+      name: 'useBranding',
+      message: 'Do you want to use XHTMLized branding?',
+      default: true
+    }, {
+      when: function (response) {
+        return !response.useBranding;
+      },
+      type: 'input',
+      name: 'authorName',
+      message: 'Enter your name'
     }, {
       type: 'confirm',
       name: 'isMailgun',
@@ -136,7 +142,8 @@ var Prompts = {
   setAnswers: function (answers) {
     this.prompts = {};
     this.prompts.projectName = answers.projectName;
-    this.prompts.projectAuthor = answers.projectAuthor;
+    this.prompts.authorName = answers.useBranding ? 'XHTMLized' : answers.authorName;
+    this.prompts.useBranding = answers.useBranding;
 
     this.prompts.isMailgun = answers.isMailgun;
     this.prompts.mailgunKey = answers.mailgunKey;
