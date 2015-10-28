@@ -6,7 +6,7 @@ module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    config: grunt.file.readJSON('secrets.json'),
+    config: grunt.file.exists('secrets.json') ? grunt.file.readJSON('secrets.json') : {},
 
     // Paths
     paths: {
