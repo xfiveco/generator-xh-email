@@ -4,7 +4,7 @@ var Prompts = {
   questions: [
     {
       name: 'projectName',
-      message: 'Please enter project\'s name',
+      message: 'Enter your project name',
       validate: function (input) {
         return !!input;
       }
@@ -22,12 +22,29 @@ var Prompts = {
       message: 'Enter your name'
     }, {
       type: 'confirm',
+      name: 'isLitmus',
+      message: 'Use Litmus to test your emails on various clients? (require Litmus account)',
+      default: true
+    }, {
+      when: function (response) {
+        return response.isLitmus;
+      },
+      name: 'litmusEmail',
+      message: 'Enter Litmus test address - xxx@litmustest.com (will be stored secretly and ignored from Git repo)',
+      validate: function (input) {
+        return !!input;
+      }
+    }, {
+      when: function (response) {
+        return !response.isLitmus;
+      },
+      type: 'confirm',
       name: 'isMailgun',
       message: 'Use Mailgun to send test emails? (require mailgun.com account)',
       default: true
     }, {
       when: function (response) {
-        return response.isMailgun === true;
+        return response.isMailgun || response.isLitmus;
       },
       name: 'mailgunKey',
       message: 'Enter Mailgun Api Key (will be stored secretly and ignored from Git repo)',
@@ -36,7 +53,7 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isMailgun === true;
+        return response.isMailgun || response.isLitmus;
       },
       name: 'mailgunSubject',
       message: 'Enter Mailgun email subject',
@@ -46,7 +63,7 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isMailgun === true;
+        return response.isMailgun || response.isLitmus;
       },
       name: 'mailgunSender',
       message: 'Enter Mailgun sender email',
@@ -55,42 +72,10 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isMailgun === true;
+        return response.isMailgun || response.isLitmus;
       },
       name: 'mailgunRecipient',
       message: 'Enter Mailgun recipient email',
-      validate: function (input) {
-        return !!input;
-      }
-    }, {
-      type: 'confirm',
-      name: 'isLitmus',
-      message: 'Use Litmus to test your emails on various clients? (require Litmus account)',
-      default: true
-    }, {
-      when: function (response) {
-        return response.isLitmus === true;
-      },
-      name: 'litmusUsername',
-      message: 'Enter Litmus account username (will be stored secretly and ignored from Git repo)',
-      validate: function (input) {
-        return !!input;
-      }
-    }, {
-      when: function (response) {
-        return response.isLitmus === true;
-      },
-      name: 'litmusPassword',
-      message: 'Enter Litmus account password (will be stored secretly and ignored from Git repo)',
-      validate: function (input) {
-        return !!input;
-      }
-    }, {
-      when: function (response) {
-        return response.isLitmus === true;
-      },
-      name: 'litmusCompany',
-      message: 'Enter Litmus company name',
       validate: function (input) {
         return !!input;
       }
@@ -101,7 +86,7 @@ var Prompts = {
       default: true
     }, {
       when: function (response) {
-        return response.isS3 === true;
+        return response.isS3;
       },
       name: 'awsAccessKey',
       message: 'Enter AWS S3 Access Key (will be stored secretly and ignored from Git repo)',
@@ -110,7 +95,7 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isS3 === true;
+        return response.isS3;
       },
       name: 'awsSecretKey',
       message: 'Enter AWS S3 Secret Key (will be stored secretly and ignored from Git repo)',
@@ -119,7 +104,7 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isS3 === true;
+        return response.isS3;
       },
       name: 's3Region',
       message: 'Enter AWS S3 Region code',
@@ -129,7 +114,7 @@ var Prompts = {
       }
     }, {
       when: function (response) {
-        return response.isS3 === true;
+        return response.isS3;
       },
       name: 's3Bucket',
       message: 'Enter AWS S3 Bucket ID',
@@ -145,7 +130,10 @@ var Prompts = {
     this.prompts.authorName = answers.useBranding ? 'XHTMLized' : answers.authorName;
     this.prompts.useBranding = answers.useBranding;
 
-    this.prompts.isMailgun = answers.isMailgun;
+    this.prompts.isLitmus = answers.isLitmus;
+    this.prompts.litmusEmail = answers.litmusEmail;
+
+    this.prompts.isMailgun = answers.isLitmus ? true : answers.isMailgun;
     this.prompts.mailgunKey = answers.mailgunKey;
     this.prompts.mailgunSubject = answers.mailgunSubject;
     this.prompts.mailgunSender = answers.mailgunSender;
@@ -156,11 +144,6 @@ var Prompts = {
     this.prompts.awsSecretKey = answers.awsSecretKey;
     this.prompts.s3Region = answers.s3Region;
     this.prompts.s3Bucket = answers.s3Bucket;
-
-    this.prompts.isLitmus = answers.isLitmus;
-    this.prompts.litmusUsername = answers.litmusUsername;
-    this.prompts.litmusPassword = answers.litmusPassword;
-    this.prompts.litmusCompany = answers.litmusCompany;
   }
 };
 

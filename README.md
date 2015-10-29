@@ -112,43 +112,13 @@ where `index` is your template name. After that you can check your inbox for new
 
 Another great tool that you can use is [Litmus](https://litmus.com) which allows you to build, test, and monitor your email templates.
 
-Similarly, you can check the Litmus option during generation and you will be prompted to provide the tool details. You can send your templates to Litmus by typing:
+Similarly, you can check the Litmus option during generation and you will be prompted to provide the test email address. You can send your templates to Litmus by typing:
 
 ```
 grunt test --template=index
 ```
 
-where `index` is your template name. After that you can check your Litmus account where your templates will land one by one in a variety of different email clients. We're currently supporting the list below, but you can easily add more from [Litmus supported client list](https://litmus.com/emails/clients.xml):
-- Android 2.2
-- Android 4
-- Apple Mail 7
-- Apple Mail 8
-- iPhone 5s (iOS 7)
-- iPhone 6 (iOS 8)
-- iPhone 6 Plus
-- iPad Mini
-- iPad (Retina)
-- Lotus Notes 8
-- Lotus Notes 8.5
-- Outlook 2007
-- Outlook 2010
-- Outlook 2011
-- Outlook 2013
-- Thunderbird 31
-- Windows Phone 8
-- Gmail (Android)
-- Gmail (Explorer)
-- Gmail (Firefox)
-- Gmail (Chrome)
-- AOL Mail (Explorer)
-- AOL Mail (Firefox)
-- AOL Mail (Chrome)
-- Outlook.com (Explorer)
-- Outlook.com (Firefox)
-- Outlook.com (Chrome)
-- Yahoo! Mail (Explorer)
-- Yahoo! Mail (Firefox)
-- Yahoo! Mail (Chrome)
+where `index` is your template name. After that you can check your Litmus account where your templates will land one by one in a variety of different email clients.
 
 #### AWS S3 CDN
 
