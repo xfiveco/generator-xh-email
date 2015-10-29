@@ -7,6 +7,18 @@ XH Email Generator [![Build Status](https://travis-ci.org/xhtmlized/generator-xh
 
 XH Email is suitable for client work when you deliver a completed project to your client for further review and development.
 
+## Features
+- Custom project name
+- Responsive project index with a list of templates
+- CSS Preprocessing with [Sass](http://http://sass-lang.com/)
+- Live reload and browsers syncing with [BrowserSync](http://www.browsersync.io/)
+- Consistent coding style supported by [.editorconfig](http://editorconfig.org/)
+- Inlining styles and CSS validation using Premailer
+- Ability to modularize templates by using Handlebars.js
+- Sending emails to test templates on real email client using Mailgun
+- Cross-client testing using Litmus service
+- Uploading images to AWS S3 automatically
+
 ## Getting Started
 
 The following software needs to be installed if you want to use XH Email Generator. These installations need to be done just once so you can skip this section if you have the software already installed.
@@ -46,13 +58,130 @@ Congratulations, you are now ready to use XH Email Generator!
 
 ## Usage
 
-Finally, initiate the generator:
+### 1) Project scaffolding
+
+To create a project with XH Generator, create a new folder, open a command line in it and type:
 
 ```
 yo xh-email
 ```
 
+You will be presented with a welcome screen and project scaffolding options. Answer the generator questions according your project needs.
+
+Once done, the generator will create the required files and folders and install all NPM dependencies for you.
+
+### 2) Development
+
+When you have the basic setup done, you can start development. Run the grunt build command to generate preview files in the dist folder:
+
+```
+grunt build
+```
+
+If everything went ok, the preview files will be generated and you will be able to check your work in the `dist` folder.
+
+To re-compile HTML / SCSS file in real time you can use default task. Type:
+
+```
+grunt
+```
+
+and this will start a task that will watch for changes in files and recompile them as needed. A development server will be started using BrowserSync script.
+
+To rebuild the whole project, use the grunt build task again:
+
+```
+grunt build
+```
+
+### 3) Extra tools
+
+#### Mailgun
+
+XH Email Genearator is using [Mailgun](https://mailgun.com) to send emails through mailgun as part of your build. It's a terrific tool created to test your email templates on real email client.
+
+You can set the Mailgun option during project generation and you will be asked to provide API key and task details. After that you can easily send yourself your emails by:
+
+```
+grunt send --template=index
+```
+
+where `index` is your template name. After that you can check your inbox for new message. Please remember to use this command after you build the project.
+
+#### Litmus
+
+Another great tool that you can use is [Litmus](https://litmus.com) which allows you to build, test, and monitor your email templates.
+
+Similarly, you can check the Litmus option during generation and you will be prompted to provide the tool details. You can send your templates to Litmus by typing:
+
+```
+grunt test --template=index
+```
+
+where `index` is your template name. After that you can check your Litmus account where your templates will land one by one in a variety of different email clients. We're currently supporting the list below, but you can easily add more from [Litmus supported client list](https://litmus.com/emails/clients.xml):
+- Android 2.2
+- Android 4
+- Apple Mail 7
+- Apple Mail 8
+- iPhone 5s (iOS 7)
+- iPhone 6 (iOS 8)
+- iPhone 6 Plus
+- iPad Mini
+- iPad (Retina)
+- Lotus Notes 8
+- Lotus Notes 8.5
+- Outlook 2007
+- Outlook 2010
+- Outlook 2011
+- Outlook 2013
+- Thunderbird 31
+- Windows Phone 8
+- Gmail (Android)
+- Gmail (Explorer)
+- Gmail (Firefox)
+- Gmail (Chrome)
+- AOL Mail (Explorer)
+- AOL Mail (Firefox)
+- AOL Mail (Chrome)
+- Outlook.com (Explorer)
+- Outlook.com (Firefox)
+- Outlook.com (Chrome)
+- Yahoo! Mail (Explorer)
+- Yahoo! Mail (Firefox)
+- Yahoo! Mail (Chrome)
+
+#### AWS S3 CDN
+
+You can also easily push your images to [S3 Content Delivery Network](https://aws.amazon.com/s3). If you select S3 option during project generation you'll be asked to put your account API keys and bucket name and special task will be added to your main build workflow.
+
+You just put the image name in your image `src` attribute without any path, place the image in your `img` folder and the grunt tasks do the rest.
+
+```
+<img src="test-image.jpg" alt="" />
+```
+
+#### Handlebars templates
+
+The main build architecture is created using [Assemble](http://assemble.io) plugin which allows you to use all of it's fearures as well as Handlebars templating system.
+
+Right after the project is generated you'll be able to use default email layout for your templates and basic Index template for starters. The initial HTML structure will look like this:
+
+- **layouts**
+  - default.hbs
+- **templates**
+  - index.hbs
+
+Each file in the `templates` folder should contain some basic information at the top of the file:
+
+```
+---
+layout: default.hbs
+subject: Index email template
+---
+```
+
 ## Sensitive Information
+
 During project generation process a file `secrets.json` will be created. In that file we store all of secret credentials needed for additional services used in XH Email Generator.
 
 By default this file will be ignored from git repository. We encourage you __not__ to store sensitive data in your git repo. If you must, please look into [git-encrypt](https://github.com/shadowhand/git-encrypt) or some other method of encrypting your configuration secrets.

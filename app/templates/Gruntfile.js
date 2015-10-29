@@ -1,6 +1,7 @@
 module.exports = function (grunt) {
   'use strict';
 
+  require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
   // Project configuration.
@@ -29,11 +30,6 @@ module.exports = function (grunt) {
       litmus: {
         options: {
           message: 'Email tests successfully sent to Litmus'
-        }
-      }<% } %><% if (isS3) { %>,
-      cdnify: {
-        options: {
-          message: 'Assets successfully sent to S3'
         }
       }<% } %>,
       build: {
@@ -102,7 +98,7 @@ module.exports = function (grunt) {
           recipient: '<%%= config.mailgun.recipient %>',
           subject: '<%%= config.mailgun.subject %>'
         },
-        src: ['<%%= paths.dist %>/' + grunt.option('template')]
+        src: ['<%%= paths.dist %>/' + grunt.option('template') + '.html']
       }
     },<% } %><% if (isLitmus) { %>
 
@@ -148,7 +144,7 @@ module.exports = function (grunt) {
             'chromeyahoo'         // Yahoo! Mail (Chrome)
           ]
         },
-        src: ['<%%= paths.dist %>/' + grunt.option('template')]
+        src: ['<%%= paths.dist %>/' + grunt.option('template') + '.html']
       }
     },<% } %><% if (isS3) { %>
 
@@ -169,9 +165,9 @@ module.exports = function (grunt) {
         },
         files: [{
           expand: true,
-          cwd: '<%%= paths.src %>/img/',
-          src: ['**'],
-          dest: '/<%%= paths.src %>/img/'
+          cwd: '<%%= paths.src %>/img',
+          src: ['*'],
+          dest: '/<%%= pkg.name %>'
         }]
       }
     },
@@ -184,9 +180,9 @@ module.exports = function (grunt) {
         supportedTypes: 'html'
       },
       dist: {
-        cwd: './<%%= paths.dist %>/',
+        cwd: './<%%= paths.dist %>',
         src: ['*.html'],
-        dest: './<%%= paths.dist %>/'
+        dest: './<%%= paths.dist %>'
       }
     },<% } %>
 
@@ -221,32 +217,18 @@ module.exports = function (grunt) {
         tasks: ['build']
       }
     }
-  });
-
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-browser-sync');<% if (isMailgun) { %>
-  grunt.loadNpmTasks('grunt-mailgun');<% } %>
-  grunt.loadNpmTasks('grunt-premailer');<% if (isS3) { %>
-  grunt.loadNpmTasks('grunt-aws-s3');
-  grunt.loadNpmTasks('grunt-cdn');<% } %><% if (isLitmus) { %>
-  grunt.loadNpmTasks('grunt-litmus');<% } %>
-  grunt.loadNpmTasks('grunt-notify');
-  grunt.loadNpmTasks('assemble');<% if (isMailgun) { %>
+  });<% if (isMailgun) { %>
 
   // Use grunt send if you want to actually send the email to your inbox
-  // grunt send --template=index.html
+  // grunt send --template=index
   grunt.registerTask('send', ['mailgun', 'notify:mailgun']);<% } %><% if (isLitmus) { %>
 
   // Test email templates using Litmus
-  // grunt test --template=index.html
-  grunt.registerTask('test', ['litmus', 'notify:litmus']);<% } %><% if (isS3) { %>
-
-  // Upload images to our CDN on Rackspace Cloud Files
-  grunt.registerTask('cdnify', ['aws_s3', 'cdn', 'notify:cdnify']);<% } %>
+  // grunt test --template=index
+  grunt.registerTask('test', ['litmus', 'notify:litmus']);<% } %>
 
   // Main build task where actually all of the magic happen
-  grunt.registerTask('build', ['sass', 'assemble', 'premailer', 'notify:build']);
+  grunt.registerTask('build', ['sass', 'assemble', 'premailer'<% if (isS3) { %>, 'aws_s3', 'cdn'<% } %>, 'notify:build']);
 
   // Where we tell Grunt what to do when we type "grunt" into the terminal.
   grunt.registerTask('default', ['browserSync', 'watch']);
